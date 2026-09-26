@@ -1,12 +1,14 @@
 /* 
-	Напишите функцию getNames, которая принимает массив объектов пользователей и возвращает массив их имен. Используйте map для этого.
+	Напишите функцию getNames, 
+	которая принимает массив объектов пользователей и возвращает массив их имен. 
+	Используйте map для этого.
 */
 
 export type User = {
-  name: string;
+	name: string;
 }
 
 export function getNames(users: User[]): string[] {
-
+	return users.map(elem => elem.name)
 }
 
