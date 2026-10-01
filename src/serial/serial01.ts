@@ -1,12 +1,17 @@
 /* 	 
-	Дан класс Order и сериализованные данные. Добавьте правильный декоратор к полю customer, чтобы метод getOrderInfo() работал.
+	Дан класс Order и сериализованные данные. 
+	Добавьте правильный декоратор к полю customer, чтобы метод getOrderInfo() работал.
 */
 
 import { User } from "./user";
 
+import { Type } from "class-transformer";
+import "reflect-metadata";
+
 export class Order {
   id: number;
   product: string;
+  @Type(() => User)
   customer: User; // Требует декоратора
 
   constructor(
@@ -19,6 +24,7 @@ export class Order {
     this.product = product;
     this.customer = new User(firstName, lastName);
   }
+  	
 
   getOrderInfo() {
     return `Order #${this.id} by ${this.customer.getFullName()}`;
