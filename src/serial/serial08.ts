@@ -1,13 +1,19 @@
 /* 	
 	Обеспечьте сериализацию и десериализацию объектов классов Circle, Rectangle и Drawing
 */
+import "reflect-metadata";
+import {Type} from "class-transformer";
+
 
 export abstract class Shape {
+  abstract _type: string;
   abstract area(): number;
 }
 
 export class Circle extends Shape {
+  override _type = "circle";
   radius: number;
+
   constructor(radius: number) {
     super();
     this.radius = radius;
@@ -18,13 +24,16 @@ export class Circle extends Shape {
 }
 
 export class Rectangle extends Shape {
+  override _type = "rectangle";
   width: number;
   height: number;
+
   constructor(width: number, height: number) {
     super();
     this.width = width;
     this.height = height;
   }
+
   area() {
     return this.width * this.height;
   }
@@ -33,6 +42,15 @@ export class Rectangle extends Shape {
 export class Drawing {
   name: string;
 
+  @Type(() => Shape, {
+	discriminator: {
+		property: "type",
+		subTypes: [
+			{value: Circle, name: "circle"},
+			{value: Rectangle, name: "rectangle"}
+		],
+	},
+  })
   shapes: Shape[];
   constructor(name: string, shapes: Shape[]) {
     this.name = name;
