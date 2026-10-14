@@ -1,5 +1,6 @@
 /* 
-	Реализовать функцию getAllUserEmails(xmlDoc), которая принимает XML-документ xmlDoc и возвращает массив email-адресов всех пользователей в нем.
+	Реализовать функцию getAllUserEmails(xmlDoc), 
+	которая принимает XML-документ xmlDoc и возвращает массив email-адресов всех пользователей в нем.
 
 	Пример XML:
 <users>
@@ -28,5 +29,9 @@ export interface User {
 }
 
 export function getAllUserEmails(xmlDoc: Document): string[] {
+	const emailTag = Array.from(xmlDoc.getElementsByTagName("email"));
+	const emailText = emailTag.map(elem => elem.textContent);
+
+	return emailText;
 
 }
