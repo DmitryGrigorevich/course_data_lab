@@ -1,5 +1,4 @@
 /* 
-	Реализовать функцию findOrdersByStatus(xmlDoc, status), которая принимает XML-документ xmlDoc и строку status, которая представляет статус заказа. Функция должна возвращать массив заказов с заданным статусом.
 
 	Пример XML:
 <orders>
@@ -16,7 +15,14 @@
   </order>
 </orders>
 
+
+	Реализовать функцию findOrdersByStatus(xmlDoc, status), 
+	которая принимает XML-документ xmlDoc и строку status, 
+	которая представляет статус заказа. 
+	Функция должна возвращать массив заказов с заданным статусом.
+	
 */
+
 
 export interface Order {
   id: string;
@@ -30,5 +36,12 @@ export interface OrderItem {
 }
 
 export function findOrdersByStatus(xmlDoc: Document, status: string): Element[] {
+	const orders = Array.from(xmlDoc.getElementsByTagName("order"));
+
+	const needOrders = orders.filter(
+		elem => elem.getAttribute("status") === status
+	);
+
+	return needOrders;
 
 }
