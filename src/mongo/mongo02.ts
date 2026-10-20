@@ -13,5 +13,8 @@ export class Student {
 
 export async function find_students_by_grade(db: Db, grade: string): Promise<Student[]> {
     // TODO: Найти всех студентов с указанным классом
-	return db.collection("students")
+
+	return db.collection<Student>("students")
+		.find({grade: grade})
+		.toArray()
 }
