@@ -15,6 +15,24 @@ export function extractTitles(xml: string): string[] {
   // - открытия тега title (установите isTitleTag = true)
   // - текстового содержимого (если isTitleTag, добавьте к currentTitle)
   // - закрытия тега title (добавьте currentTitle в titles и сбросьте значения)
+  parser.onopentag = (node) => {
+	if (node.name === "title") {
+		isTitleTag = true;
+		currentTitle = ""
+	}
+
+	parser.ontext = (text) => {
+		isTitleTag && (currentTitle += text);
+	}
+
+	parser.onclosetag = (node) => {
+		if (node === "title") {
+			titles.push(currentTitle);
+			currentTitle = "";
+			isTitleTag = false;
+		}
+	}
+  }
 
 
   parser.write(xml).close();
