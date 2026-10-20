@@ -11,8 +11,12 @@ export function collectBookIds(xml: string): string[] {
   const ids: string[] = [];
   
   // TODO: При открытии тега 'book' добавляйте значение атрибута 'id' в массив ids
+  parser.onopentag = (node) => {
+	if (node.name === "book") {
+		typeof node.attributes["id"] === "string" && ids.push(node.attributes["id"])
+	}
+  };
 
-  
   parser.write(xml).close();
   return ids;
-}
+};
