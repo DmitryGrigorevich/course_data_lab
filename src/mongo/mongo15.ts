@@ -15,7 +15,9 @@ export class Customer {
 
 export async function find_customers_with_phone(db: Db): Promise<Customer[]> {
     // TODO: Найти всех клиентов, у которых указан телефонный номер
-	return db.collection("customers")
+	return db.collection<Customer>("customers")
+			.find({phone: {$type: 'string'}})
+			.toArray()
 }
 
 
