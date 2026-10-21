@@ -1,4 +1,3 @@
-import { Student } from '../mongo/mongo02';
 import { prisma } from './prisma_init'
 
 export async function update_student_names_pattern(oldPattern: string, newPattern: string) {
