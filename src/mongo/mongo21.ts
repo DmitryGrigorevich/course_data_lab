@@ -24,6 +24,17 @@ export async function get_customer_categories(db: Db): Promise<CustomerCategory[
     // "Regular" если totalPurchases между 100 и 1000
     // "New" в остальных случаях
 	return await db.collection("customers").aggregate([
+		{
+			$addFields: {
+				category: {
+					$cond: [
+						{$or: [{$gt: ["$totalPurchases", 1000]}, {$eq: ["$membershipLevel", "premium"]}]},
+						"VIP",
+						{$cond: [{$gte:["$totalPurchases", 100]}, "Regular", "New"]}
+					],
 
+				}
+			}
+		}
     ]).toArray() as CustomerCategory[]
 }
