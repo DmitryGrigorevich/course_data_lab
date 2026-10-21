@@ -29,6 +29,20 @@ export async function get_management_chain(db: Db, employeeId: string): Promise<
 				_id: employeeId // Начинаем с указанного сотрудника
 			}
 		},
+		{
+			$graphLookup: {
+				from: "employees",
+				startWith: "$managerId",
+				connectFromField: "managerId",
+				connectToField: "_id",
+				as: "managers",
+				depthField: "level"
+			}
+		},
+		{$unwind: "$managers"},
+		{$replaceRoot: {newRoot: "$managers"}},
+		{$project: {_id: 1, name: 1, position: 1, level: 1}}
+
 		
 	]).toArray() as ManagementEmployee[]
 }
