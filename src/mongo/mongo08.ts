@@ -1,5 +1,4 @@
 import type { Db } from "mongodb"
-import { publicDecrypt } from "node:crypto"
 
 export class Article {
     title: string
